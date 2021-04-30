@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/css/registration.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <!-- <script src="../static/js/postrequest.js"></script> -->
+    <!-- <script src="/js/getrequest.js"></script> -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="style.css"> --->
+</head>
+<body>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+  <div class="container">
+    <div class="title">Registration form</div>
+    <div class="content" id="venkat">
+      <form action="#" id="krishna">
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details">First Name</span>
+            <input type="text" id="firstname" placeholder="Enter your name" required >
+          </div>
+          <div class="input-box">
+            <span class="details">last name</span>
+            <input type="text" id="lastname" placeholder="Enter your username" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Email</span>
+            <input type="text" id="email" placeholder="Enter your email" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Phone Number</span>
+            <input type="number" id="phonenumber" placeholder="Enter your number" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Date of birth</span>
+            <input type="date" id="dob" placeholder="dd-mm-yyyy" pattern="{}" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Password</span>
+            <input type="password" id="password" placeholder="Enter your password" required>
+          </div>
+        </div>
+        <!-- <div class="gender-details">
+          <input type="radio" name="gender" id="dot-1">
+          <input type="radio" name="gender" id="dot-2">
+          <input type="radio" name="gender" id="dot-3">
+          <span class="gender-title">Gender</span>
+          <div class="category">
+            <label for="dot-1">
+            <span class="dot one"></span>
+            <span class="gender">Male</span>
+          </label>
+          <label for="dot-2">
+            <span class="dot two"></span>
+            <span class="gender">Female</span>
+          </label>
+          <label for="dot-3">
+            <span class="dot three"></span>
+            <span class="gender">Prefer not to say</span>
+            </label>
+          </div>
+        </div> -->
+        <div class="button">
+          <input type="submit" value="Register" id="button">
+        </div>
+      </form>
+    </div>
+  </div>
+  <script type="text/javascript">
+  $("#button").click(function(){
+    	var result;
+    	$("#krishna").submit(function (event) {
+            event.preventDefault();
+            fire_ajax_submit();
+
+        })
+
+    
+    $("#button").prop("disabled", true);
+
+     $.ajax({
+      type: "post",
+      url: "http://localhost:8086/register",
+      cache: false,
+      data:JSON.stringify({"firstname" : $("#firstname").val(),
+      "lastname" : $("#lastname").val(),
+      "email" : $("#email").val(),
+      "phonenumber" : $("#phonenumber").val(),
+      "dob" : $("#dob").val(),
+      "password" : $("#password").val(),}),
+      dataType : 'json',
+      contentType:'application/json',
+      success: function (data) {
+
+          var json = "<h4>Ajax Response</h4>"
+              + JSON.stringify(data, null, 4);
+          $('#venkat').html(json);
+
+          console.log("SUCCESS : ", data);
+          $("#button").prop("disabled", false);
+
+      },
+      error: function (e) {
+
+          var json = "<h4>Ajax Response</h4>"
+              + e.responseText;
+          $('#venkat').html(json);
+
+          console.log("ERROR : ", e);
+          $("#button").prop("disabled", false);
+
+      }
+  })
+
+})
+ </script>
+</body>
+</html>
